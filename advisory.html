@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesticide Advisory | Smart Agriculture</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="advisory-page">
+
+    <nav class="home-navbar">
+        <div class="logo">🌱 Smart Agriculture</div>
+        <div class="home-links">
+            <a href="home.html">Home</a>
+            <a href="about.html">About Project</a>
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+    </nav>
+
+    <section class="advisory-hero">
+        <h1>🌿 Pesticide Advisory System</h1>
+        <p>Identify crop concerns and explore safer pest-management guidance.</p>
+    </section>
+
+    <main class="advisory-container">
+
+        <section class="advisory-card">
+            <h2>🔍 Crop & Pest Details</h2>
+
+            <form id="advisoryForm">
+
+                <label for="crop">Select Crop</label>
+                <select id="crop" required>
+                    <option value="">Choose crop</option>
+                    <option value="rice">Rice</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="maize">Maize</option>
+                    <option value="vegetables">Other Vegetables</option>
+                </select>
+
+                
+<label for="pest">Select Pest</label>
+<select id="pest" required>
+    <option value="">-- Select Crop First --</option>
+</select>
+
+
+                <label for="location">Location (Village / District)</label>
+                <input type="text" id="location"
+                       placeholder="Example: Bengaluru Rural" required>
+
+
+<label for="pestImage">Upload Pest / Crop Image</label>
+
+<input type="file" id="pestImage" accept="image/*">
+
+<button type="button" id="analyzeImage" class="advisory-button">
+    Analyze Crop Image 🔍
+</button>
+
+<div id="imageAnalysisResult" class="advisory-result" hidden>
+    <h3>Crop Image Analysis</h3>
+    <p id="analysisMessage"></p>
+</div>
+
+
+<div class="image-preview">
+    <img id="previewImage" alt="Uploaded crop or pest preview" hidden>
+    <p id="previewMessage">Your uploaded image will appear here.</p>
+</div>
+
+
+                <label for="stage">Crop Growth Stage</label>
+                <select id="stage" required>
+                    <option value="">Choose stage</option>
+                    <option value="seedling">Seedling</option>
+                    <option value="vegetative">Vegetative</option>
+                    <option value="flowering">Flowering</option>
+                    <option value="fruiting">Fruiting / Harvest stage</option>
+                </select>
+
+                <button type="submit" class="advisory-button">
+                    Get Advisory 🌱
+                </button>
+
+            </form>
+
+            <div id="advisoryResult" class="advisory-result" hidden></div>
+
+<div id="pestDetails" class="advisory-result" hidden>
+    <h3 id="pestName"></h3>
+
+    <p><strong>Symptoms:</strong> <span id="pestSymptoms"></span></p>
+
+    <p><strong>Prevention:</strong> <span id="pestPrevention"></span></p>
+
+    <p><strong>Management:</strong> <span id="pestManagement"></span></p>
+
+<p>
+    <strong>Organic Control:</strong>
+    <span id="pestOrganic"></span>
+</p>
+
+</div>
+
+        </section>
+
+        <section class="safety-note">
+            <h3>⚠️ Important Safety Notice</h3>
+            <p>
+                This prototype provides general pest-management guidance,
+                not a confirmed pest diagnosis or chemical prescription.
+                Always verify pesticide selection and dosage with the
+                product label and a qualified agricultural expert.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="home-footer">
+        Smart Agriculture Solution | AIML Community Project
+    </footer>
+
+    <script src="advisory.js"></script>
+
+<section class="advisory-card">
+    <h2>🌿 Fertilizer Calculator</h2>
+    <p>Enter your soil test values to view soil guidance.</p>
+
+    <label for="fertCrop">Select Crop</label>
+    <select id="fertCrop">
+        <option value="">Select Crop</option>
+        <option value="rice">Rice</option>
+        <option value="tomato">Tomato</option>
+        <option value="cotton">Cotton</option>
+        <option value="maize">Maize</option>
+    </select>
+
+    <label for="nitrogen">Nitrogen (N)</label>
+    <input type="number" id="nitrogen" placeholder="Enter N value">
+
+    <label for="phosphorus">Phosphorus (P)</label>
+    <input type="number" id="phosphorus" placeholder="Enter P value">
+
+    <label for="potassium">Potassium (K)</label>
+    <input type="number" id="potassium" placeholder="Enter K value">
+
+    <label for="soilPH">Soil pH</label>
+    <input type="number" id="soilPH" step="0.1" placeholder="Enter soil pH">
+
+    <button type="button" id="calculateFertilizer">
+        Get Soil Guidance
+    </button>
+
+    <div id="fertilizerResult" class="advisory-result" hidden>
+        <h3>Soil Guidance</h3>
+        <p id="fertilizerAdvice"></p>
+    </div>
+</section>
+
+<section class="advisory-card">
+    <h2>🌱 Crop Health Dashboard</h2>
+    <p>Monitor your crop condition.</p>
+
+    <div class="health-grid">
+        <div class="health-box">
+            <h3>🌿 Soil Health</h3>
+            <p id="soilHealthStatus">Not Checked</p>
+        </div>
+
+        <div class="health-box">
+            <h3>💧 Irrigation</h3>
+            <p id="irrigationStatus">Not Checked</p>
+        </div>
+
+        <div class="health-box">
+            <h3>🐛 Pest Monitoring</h3>
+            <p id="pestHealthStatus">Not Checked</p>
+        </div>
+    </div>
+
+    <button type="button" id="checkCropHealth">
+        Check Crop Health
+    </button>
+
+    <div id="cropHealthResult" hidden>
+        <h3>Crop Health Summary</h3>
+        <p id="cropHealthSummary"></p>
+    </div>
+</section>
+<script src="language.js"></script>
+
+
+</body>
+</html>

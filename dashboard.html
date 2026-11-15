@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Agriculture | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+.language-box {
+  text-align: right;
+  padding: 10px;
+}
+.language-box select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+</style>
+</head>
+
+<body class="app-body">
+    
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar">
+        <div class="sidebar-brand">
+            <span class="brand-icon">🌱</span>
+            <span>Smart<span class="brand-green">Agri</span></span>
+        </div>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        
+<nav class="sidebar-nav">
+  <a href="dashboard.html" class="sidebar-link active" data-key="dashboard">▦ Dashboard</a>
+  <a href="#weather" class="sidebar-link" data-key="weather">☀️ Weather</a>
+  <a href="#irrigation" class="sidebar-link" data-key="irrigation">💧 Irrigation</a>
+  <a href="#crop" class="sidebar-link" data-key="crop">🌾 Crop Guide</a>
+  <a href="#pest" class="sidebar-link" data-key="pest">🐛 Pest Management</a>
+  <a href="#soil" class="sidebar-link" data-key="soil">🧪 Soil Health</a>
+  <a href="advisory.html" class="sidebar-link" data-key="advisory">🌿 Pesticide Advisory</a>
+</nav>
+
+<nav class="sidebar-nav">
+  <a href="#profile" class="sidebar-link" data-key="profile">👤 My Profile</a>
+  <a href="home.html" class="sidebar-link" data-key="home">⌂ Home</a>
+</nav>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-tip">
+                <span>🌿</span>
+                <strong>Grow smarter</strong>
+                <p>Make farming more sustainable every day.</p>
+            </div>
+            <button class="sidebar-logout" onclick="logout()">↪ Logout</button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="app-main">
+
+        <!-- TOP HEADER -->
+        <header class="app-topbar">
+            <div>
+                <span class="topbar-small">SMART AGRICULTURE PLATFORM</span>
+                <h2>Farmer Dashboard</h2>
+            </div>
+
+            <div class="topbar-user">
+                <div class="user-avatar">👨‍🌾</div>
+                <div>
+                    <strong id="topFarmerName">Farmer</strong>
+                    <small>Farmer Account</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- WELCOME -->
+        <section class="dashboard-welcome">
+            <div>
+                <span class="welcome-tag">🌱 FARM MANAGEMENT</span>
+                <h1 id="welcomeMessage">Welcome to Smart Farming!</h1>
+                <p>Manage your crops, monitor soil, and make informed farming decisions.</p>
+            </div>
+            <div class="welcome-illustration">🌾</div>
+        </section>
+
+        <!-- OVERVIEW -->
+        <section class="overview-grid">
+            <div class="overview-card">
+                <div class="overview-icon weather-icon">☀️</div>
+                <div>
+                    <span>Temperature</span>
+                    <h3 id="overviewTemp">Loading...</h3>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-icon water-icon">💧</div>
+                <div>
+                    <span>Humidity</span>
+                    <h3 id="overviewHumidity">Loading...</h3>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-icon rain-icon">🌧️</div>
+                <div>
+                    <span>Rainfall</span>
+                    <h3 id="overviewRain">Loading...</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOOLS SECTION -->
+        <div class="section-heading">
+            <div>
+                <h2>Farm Management Tools</h2>
+                <p>Use the tools below to monitor your farm.</p>
+            </div>
+        </div>
+
+        <section class="management-grid">
+
+            <!-- WEATHER -->
+            <div class="app-card" id="weather">
+                <div class="card-heading">
+                    <div class="card-icon weather-icon">☀️</div>
+                    <div>
+                        <h3>Live Weather</h3>
+                        <p>Current weather conditions</p>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <p id="weatherLocation">Location: Bengaluru</p>
+                    <p id="temperature">Temperature: Loading...</p>
+                    <p id="humidity">Humidity: Loading...</p>
+                    <p id="rain">Rain: Loading...</p>
+                </div>
+
+                <button class="app-button secondary-button" onclick="getWeather()">
+                    ↻ Refresh Weather
+                </button>
+                <small>Weather data: Open-Meteo</small>
+            </div>
+
+            <!-- IRRIGATION -->
+            <div class="app-card" id="irrigation">
+                <div class="card-heading">
+                    <div class="card-icon water-icon">💧</div>
+                    <div>
+                        <h3>Smart Irrigation</h3>
+                        <p>Check your soil moisture</p>
+                    </div>
+                </div>
+
+                <label for="moisture">Soil Moisture (%)</label>
+                <input type="number" id="moisture" min="0" max="100"
+                       placeholder="Enter moisture (0-100)">
+
+                <button class="app-button" onclick="checkIrrigation()">
+                    Check Irrigation
+                </button>
+                <div class="result-box" id="irrigationResult"></div>
+            </div>
+
+            <!-- CROP GUIDE -->
+            <div class="app-card" id="crop">
+                <div class="card-heading">
+                    <div class="card-icon crop-icon">🌾</div>
+                    <div>
+                        <h3>Crop Recommendation</h3>
+                        <p>Find suitable crops</p>
+                    </div>
+                </div>
+
+                <label for="soilType">Soil Type</label>
+                <select id="soilType">
+                    <option value="">Select Soil</option>
+                    <option value="clay">Clay Soil</option>
+                    <option value="loamy">Loamy Soil</option>
+                    <option value="sandy">Sandy Soil</option>
+                    <option value="black">Black Soil</option>
+                </select>
+
+                <label for="water">Water Availability</label>
+                <select id="water">
+                    <option value="">Select Water</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+
+                <button class="app-button" onclick="recommendCrop()">
+                    Recommend Crop
+                </button>
+                <div class="result-box" id="cropResult"></div>
+            </div>
+
+            <!-- PEST MANAGEMENT -->
+            <div class="app-card" id="pest">
+                <div class="card-heading">
+                    <div class="card-icon pest-icon">🐛</div>
+                    <div>
+                        <h3>Pest Management</h3>
+                        <p>Get general pest guidance</p>
+                    </div>
+                </div>
+
+                <label for="pestCrop">Select Crop</label>
+                <select id="pestCrop">
+                    <option value="">Select Crop</option>
+                    <option value="rice">Rice</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="maize">Maize</option>
+                </select>
+
+                <label for="symptom">Observed Symptoms</label>
+                <select id="symptom">
+                    <option value="">Select Symptom</option>
+                    <option value="yellow">Yellow Leaves</option>
+                    <option value="holes">Holes in Leaves</option>
+                    <option value="spots">Leaf Spots</option>
+                    <option value="wilting">Wilting</option>
+                </select>
+
+                <button class="app-button" onclick="checkPest()">
+                    Get Guidance
+                </button>
+                <div class="result-box" id="pestResult"></div>
+            </div>
+
+            <!-- SOIL HEALTH -->
+            <div class="app-card" id="soil">
+                <div class="card-heading">
+                    <div class="card-icon soil-icon">🧪</div>
+                    <div>
+                        <h3>Soil Health</h3>
+                        <p>Review soil test values</p>
+                    </div>
+                </div>
+
+                <label for="ph">Soil pH</label>
+                <input type="number" id="ph" min="0" max="14" step="0.1"
+                       placeholder="Enter soil pH">
+
+                <label for="nitrogen">Nitrogen (N)</label>
+                <input type="number" id="nitrogen" placeholder="Enter N value">
+
+                <label for="phosphorus">Phosphorus (P)</label>
+                <input type="number" id="phosphorus" placeholder="Enter P value">
+
+                <label for="potassium">Potassium (K)</label>
+                <input type="number" id="potassium" placeholder="Enter K value">
+
+                <button class="app-button" onclick="checkSoil()">
+                    Check Soil
+                </button>
+                <div class="result-box" id="soilResult"></div>
+            </div>
+
+            <!-- PROFILE -->
+            <div class="app-card" id="profile">
+                <div class="card-heading">
+                    <div class="card-icon profile-icon">👨‍🌾</div>
+                    <div>
+                        <h3>Farmer Profile</h3>
+                        <p>Your account information</p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <p id="farmerName">Name:</p>
+                    <p id="farmerEmail">Email:</p>
+                    <p id="farmerPhone">Phone:</p>
+                </div>
+
+                <button class="app-button secondary-button" onclick="showProfile()">
+                    View Profile
+                </button>
+            </div>
+
+        </section>
+
+        <footer class="app-footer">
+            <p>🌱 Smart Agriculture Solution</p>
+            <small>Supporting smarter and more sustainable farming.</small>
+        </footer>
+
+    </main>
+</div>
+
+<script>
+let farmerName = localStorage.getItem("loggedInUser");
+
+document.getElementById("welcomeMessage").innerText =
+    "Welcome, " + farmerName + "! 🌱";
+
+document.getElementById("topFarmerName").innerText =
+    farmerName || "Farmer";
+
+function checkIrrigation() {
+    let moisture = Number(document.getElementById("moisture").value);
+    let result = document.getElementById("irrigationResult");
+
+    if (moisture < 0 || moisture > 100 ||
+        document.getElementById("moisture").value === "") {
+        result.innerText = "Enter moisture between 0 and 100%";
+    } else if (moisture < 30) {
+        result.innerText = "🌱 Soil is dry. Irrigation may be needed.";
+    } else if (moisture < 60) {
+        result.innerText = "💧 Soil moisture is moderate. Monitor the soil.";
+    } else {
+        result.innerText = "🌿 Soil moisture is high. Irrigation may not be needed.";
+    }
+}
+
+function recommendCrop() {
+    let soil = document.getElementById("soilType").value;
+    let water = document.getElementById("water").value;
+    let result = document.getElementById("cropResult");
+
+    if (soil === "" || water === "") {
+        result.innerText = "Please select soil and water availability.";
+        return;
+    }
+
+    if (soil === "clay" && water === "high") {
+        result.innerText = "Recommended crops: Rice, Wheat";
+    } else if (soil === "loamy") {
+        result.innerText = "Recommended crops: Maize, Wheat, Vegetables";
+    } else if (soil === "sandy" && water === "low") {
+        result.innerText = "Recommended crops: Groundnut, Millets";
+    } else if (soil === "black") {
+        result.innerText = "Recommended crops: Cotton, Soybean";
+    } else {
+        result.innerText = "Recommended crops: Millets, Pulses";
+    }
+}
+
+function checkPest() {
+    let crop = document.getElementById("pestCrop").value;
+    let symptom = document.getElementById("symptom").value;
+    let result = document.getElementById("pestResult");
+
+    if (crop === "" || symptom === "") {
+        result.innerText = "Please select crop and symptom.";
+        return;
+    }
+
+    if (symptom === "yellow") {
+        result.innerText =
+            "Yellow leaves may indicate nutrient deficiency, water stress, or disease. Check soil and drainage.";
+    } else if (symptom === "holes") {
+        result.innerText =
+            "Possible insect damage. Inspect leaves and check for insects or larvae.";
+    } else if (symptom === "spots") {
+        result.innerText =
+            "Leaf spots may indicate fungal or bacterial disease. Remove severely affected leaves and seek local agricultural advice.";
+    } else if (symptom === "wilting") {
+        result.innerText =
+            "Check soil moisture, drainage, and roots. Wilting can result from water stress or disease.";
+    }
+}
+
+async function getWeather() {
+    let temperature = document.getElementById("temperature");
+    let humidity = document.getElementById("humidity");
+    let rain = document.getElementById("rain");
+
+    temperature.innerText = "Temperature: Loading...";
+    humidity.innerText = "Humidity: Loading...";
+    rain.innerText = "Rain: Loading...";
+
+    try {
+        const url =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=12.9716" +
+            "&longitude=77.5946" +
+            "&current=temperature_2m,relative_humidity_2m,rain" +
+            "&timezone=auto";
+
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error("Weather request failed");
+
+        const data = await response.json();
+
+        temperature.innerText =
+            "Temperature: " + data.current.temperature_2m + " °C";
+        humidity.innerText =
+            "Humidity: " + data.current.relative_humidity_2m + "%";
+        rain.innerText =
+            "Rain: " + data.current.rain + " mm";
+
+        document.getElementById("overviewTemp").innerText =
+            data.current.temperature_2m + " °C";
+        document.getElementById("overviewHumidity").innerText =
+            data.current.relative_humidity_2m + "%";
+        document.getElementById("overviewRain").innerText =
+            data.current.rain + " mm";
+
+    } catch (error) {
+        temperature.innerText = "Weather unavailable";
+        humidity.innerText = "";
+        rain.innerText = "Please try again.";
+        document.getElementById("overviewTemp").innerText = "Unavailable";
+        document.getElementById("overviewHumidity").innerText = "Unavailable";
+        document.getElementById("overviewRain").innerText = "Unavailable";
+        console.error(error);
+    }
+}
+
+function showProfile() {
+    let farmer = JSON.parse(localStorage.getItem("farmer"));
+
+    if (farmer) {
+        document.getElementById("farmerName").innerText =
+            "Name: " + farmer.name;
+        document.getElementById("farmerEmail").innerText =
+            "Email: " + farmer.email;
+        document.getElementById("farmerPhone").innerText =
+            "Phone: " + farmer.phone;
+    }
+}
+
+showProfile();
+getWeather();
+
+function checkSoil() {
+    let ph = Number(document.getElementById("ph").value);
+    let n = Number(document.getElementById("nitrogen").value);
+    let p = Number(document.getElementById("phosphorus").value);
+    let k = Number(document.getElementById("potassium").value);
+    let result = document.getElementById("soilResult");
+
+    if (document.getElementById("ph").value === "" ||
+        document.getElementById("nitrogen").value === "" ||
+        document.getElementById("phosphorus").value === "" ||
+        document.getElementById("potassium").value === "") {
+        result.innerText = "Please enter all soil values.";
+        return;
+    }
+
+    if (ph < 0 || ph > 14 || n < 0 || p < 0 || k < 0) {
+        result.innerText = "Enter valid soil values.";
+        return;
+    }
+
+    let message = "";
+
+    if (ph < 6) {
+        message += "Soil is acidic. ";
+    } else if (ph > 7.5) {
+        message += "Soil is alkaline. ";
+    } else {
+        message += "Soil pH is in a generally suitable range. ";
+    }
+
+    message += "NPK values recorded: N=" + n +
+        ", P=" + p + ", K=" + k + ".";
+
+    result.innerText = message;
+}
+
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "index.html";
+}
+
+
+</script>
+<script src="language.js"></script>
+
+
+
+</body>
+</html>
